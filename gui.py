@@ -1,7 +1,12 @@
 import functions
 import FreeSimpleGUI as sg
 import time
+import os
 
+
+if not  os.path.exists("todos.txt"):
+    with open("todos.txt", "w") as file:
+        pass
 
 clock = sg.Text('', key='clock')
 label = sg.Text("Type in a to-do")
@@ -33,6 +38,7 @@ while True:
             todos.append(new_todo)
             functions.write_todos(todos)
             window['todos'].update(values=todos)
+            window['todo'].update(value='')
 
         case "Edit":
             try:
@@ -44,6 +50,7 @@ while True:
                 todos[index] = new_todo
                 functions.write_todos(todos)
                 window['todos'].update(values=todos)
+                window['todo'].update(value='')
             except IndexError:
                sg.popup('Please Select an Item')
         case "Complete":
